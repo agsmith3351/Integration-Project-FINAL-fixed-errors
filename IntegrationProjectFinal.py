@@ -10,6 +10,8 @@ __author__ = "Amanda Smith"
 """The parameter prompt_text is a string"""
 """The Return type is an integer"""
 
+def validate_password(password, hashed_password, salt):
+    return hashed_password == hashlib.sha256((password + salt).encode()).hexdigest()
 
 def get_good_input_int(prompt_text):
     good_input = False
@@ -42,6 +44,8 @@ def main():
     print("Hello!" * 10)
     # I used the string operator * to say hello ten times
     print("This is Everything you need to know about Women's Lacrosse!")
+    user_password = input("Enter your password: ")
+    hashed_password, salt = hash_password(user_password)
     name = input("What is your name? ")
     print("Welcome " + name)
     # I used the string operator + to join welcome and the variable name together
@@ -226,6 +230,13 @@ def main():
         print("We are sorry you did not enjoy this program :(")
     else:
         print('That input is not understood')
+
+ stored_hashed_password = "..."  # retrieve from the database
+    stored_salt = "..."  # retrieve from the database
+    if validate_password(user_password, stored_hashed_password, stored_salt):
+        print("Password is correct!")
+    else:
+        print("Password is incorrect!")
 
 
 if __name__ == "__main__":
